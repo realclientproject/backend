@@ -1,4 +1,4 @@
-import mongoose, { Collection } from "mongoose";
+import mongoose from "mongoose";
 import uniqueValidator from 'mongoose-unique-validator';
 const { Schema, model } = mongoose;
 

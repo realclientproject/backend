@@ -1,14 +1,25 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import multer from "multer";
+import cors from "cors";
 import connectDB from "./config/db.js";
+import router from "./routes/user_route.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = new express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(multer().array());
+app.use(cors());
+app.use("/user", router);
+
 app.get("/", (req, res) => {
   res.send("api is running");
 });
