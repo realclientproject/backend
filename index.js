@@ -6,7 +6,8 @@ import bodyParser from "body-parser";
 import multer from "multer";
 import cors from "cors";
 import connectDB from "./config/db.js";
-import router from "./routes/user_route.js";
+import UserRouter from "./routes/user_route.js";
+import SubscriptionRouter from "./routes/subscription_route.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = new express();
@@ -18,7 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(multer().array());
 app.use(cors());
-app.use("/user", router);
+app.use("/user", UserRouter);
+app.use("/Subscription", SubscriptionRouter);
 
 app.get("/", (req, res) => {
   res.send("api is running");
