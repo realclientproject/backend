@@ -6,7 +6,12 @@ import jwt from "jsonwebtoken";
 class User {
   async getAllUsers(req, res, next) {
     try {
-      const response = await UserModel.find({});
+      const { page, limit } = req.query;
+      const options = {
+        page: parseInt(page, 10) || 1,
+        limit: parseInt(limit, 10) || 20,
+      };
+      const response = await UserModel.paginate({}, options);
       return res.status(200).send({ success: true, response });
     } catch (err) {
       next(err);
@@ -19,7 +24,6 @@ class User {
       var validId = mongoose.Types.ObjectId.isValid(id);
       console.log(validId);
       if (!validId) {
-        // do the required operation
         return res.status(400).send({ status: 400, message: "invalid id" });
       }
       const response = await UserModel.find({ _id: id });
@@ -56,7 +60,7 @@ class User {
     try {
       const { FirstName, LastName, Email, Password, Phone } = req.body;
       if (!(Email && Password && FirstName && LastName && Phone)) {
-        console.log("error", req.body.FirstName);
+        // console.log("error", req.body.FirstName);
         res.status(400).send("All inputs are required");
       }
 
