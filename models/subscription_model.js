@@ -1,5 +1,7 @@
-import mongoose, { Collection } from "mongoose";
-import User from "./user_model";
+import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
+import moment from "moment";
+import User from "./user_model.js";
 const { Schema, model } = mongoose;
 
 const SubscriptionSchema = new Schema(
@@ -13,22 +15,40 @@ const SubscriptionSchema = new Schema(
       type: Number,
       required: true,
     },
+    StartDate: {
+      type: Date,
+      default: Date.now,
+    },
     DueDate: {
       type: Date,
-      required: true,
     },
     User: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-      },
-  },
-  {
-    timestamps: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     collection: "subscriptions",
   }
 );
-const Subscription = model("Subscription", SubscriptionSchema);
+SubscriptionSchema.pre(["find", "findOne", "findOneAndUpdate"], function () {
+  this.populate(
+    "User",
+    "_id FirstName LastName Email Phone createdAt updatedAt"
+  );
+});
+SubscriptionSchema.pre("save", function (next) {
+  if (!this.DueDate) {
+    this.DueDate = moment(this.StartDate).add(1, "year");
+  }
+    next();
+});
+
+SubscriptionSchema.plugin(mongoosePaginate);
+const Subscription = model("SubscUserSchemaription", SubscriptionSchema);
 export default Subscription;
