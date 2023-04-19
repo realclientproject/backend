@@ -1,7 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
+import bodyParser from "body-parser";
+import multer from "multer";
+import cors from "cors";
 import connectDB from "./config/db.js";
+import UserRouter from "./routes/user_route.js";
+import SubscriptionRouter from "./routes/subscription_route.js";
 import subjectRoutes from "./routes/subject_route.js"
 import resource_Routes from "./routes/resources_route.js";
 import cookieParser from "cookie-parser";
@@ -12,10 +18,16 @@ const app = new express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+
+app.use(multer().array());
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/user", adminRoutes);
+app.use("/user", UserRouter);
+app.use("/Subscription", SubscriptionRouter);
 
 app.get("/", (req, res) => {
   res.send("api is running");
