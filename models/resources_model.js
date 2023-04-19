@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import Admin from "./admin_model.js"; 
+
 const { Schema, model } = mongoose;
 
 const resourceSchema = new Schema(
@@ -17,30 +19,25 @@ const resourceSchema = new Schema(
       required: true,
     },
     price: {
-      type: Number,
+      type: String,
       required: true,
     },
   media:{
     type:String,
     required:true,
   },
-  
-  // file:{
-  //   type:String,
-  //   // required:true,
-  // },
-    count: {
+      count: {
       type: Number,
       required: true,
     },
     admin_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admins",
+      type: Schema.Types.ObjectId,
+      ref: "Admin",
     },
     subject_id: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "subjects",
+        type:Schema.Types.ObjectId,
+        ref: "SubjectModel",
       },
     ],
   },
@@ -50,7 +47,7 @@ const resourceSchema = new Schema(
 );
 
 resourceSchema.pre(["find", "findOne"], function () {
-  this.populate(["admin_id", "subject_id"]);
+  this.populate([ "subject_id"]);
 });
 
 const resourceModel = model("resourceModel", resourceSchema);
