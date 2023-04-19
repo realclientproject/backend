@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/", Controller.getAll);
 router.get("/:id", Controller.getById);
-router.post("/",fileHandle,Controller.addResource);
+router.post("/add",fileHandle,Controller.addResource);
 router.put( "/:id", fileHandle, Controller.updateResources);
 router.delete("/:id",  Controller.deleteResource);  
 
