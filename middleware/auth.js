@@ -18,3 +18,11 @@ export function super_admin(req, res, next) {
   if (req.user.role === "superadmin") return next();
   else return res.status(401).send("Not Authorized");
 }
+export function admin(req, res, next) {
+  if (req.user.role === "admin") return next();
+  else return res.status(401).send("Not Authorized");
+}
+export function user(req, res, next) {
+  if (req.user.role === "user") return next();
+  else return res.status(401).send("Not Authorized");
+}
