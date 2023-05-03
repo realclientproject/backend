@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
+// import cookieParser from "cookie-parser";
+// import bodyParser from "body-parser";
 import multer from "multer";
 import cors from "cors";
 import connectDB from "./config/db.js";

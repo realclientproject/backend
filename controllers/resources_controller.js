@@ -75,14 +75,13 @@ export const addResource = async (req, res, next) => {
       console.log(req.body);
       const form = new resourceModel({
         name: req.body.name,
-            type: req.body.type,
-            description: req.body.description,
-            price: req.body.price,
-            count: req.body.count,
-            admin_id: req.body.admin_id,
-            subject_id: req.body.subject_id,
-            media:  req.body.media,
-          // adminUsername: req.admin.username,
+        type: req.body.type,
+        description: req.body.description,
+        price: req.body.price,
+        count: req.body.count,
+        admin_id: req.body.admin_id,
+        subject_id: req.body.subject_id,
+        media:  req.file.path,
       });
 
       await form.save().then((response) => {
@@ -98,6 +97,7 @@ export const addResource = async (req, res, next) => {
       return next(err);
   }
 };
+
 
 
 // function Delete(req, res, next) {
