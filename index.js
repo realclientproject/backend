@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import multer from "multer";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./config/db.js";
 import SubscriptionRouter from "./routes/subscription_route.js";

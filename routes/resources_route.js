@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.get("/", Controller.getAll);
 router.get("/:id", Controller.getById);
-router.post("/",upload.single("media"),Controller.addResource);
-router.put( "/:id", upload.single("media"), Controller.updateResources);
+router.post("/",upload,Controller.addResource);
+router.put( "/:id", upload, Controller.updateResources);
 router.delete("/:id",  Controller.deleteResource);  
 
 export default router;
