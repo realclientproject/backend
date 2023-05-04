@@ -7,16 +7,16 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import UserRouter from "./routes/user_route.js";
 import SubscriptionRouter from "./routes/subscription_route.js";
-import subjectRoutes from "./routes/subject_route.js"
+import subjectRoutes from "./routes/subject_route.js";
 import resource_Routes from "./routes/resources_route.js";
 import adminRoutes from "./routes/admin_route.js";
+import ContactUsMailerRoutes from "./routes/contactUsMailer_route.js";
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 const app = new express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
 
 app.use(multer().array());
 app.use(cors());
@@ -33,13 +33,13 @@ app.get("/", (req, res) => {
 await connectDB();
 
 app.use(express.urlencoded({ extended: false }));
-app.use('/public/images',express.static('./public/images'))
-app.use('/public/files',express.static('./public/files'))
-
+app.use("/public/images", express.static("./public/images"));
+app.use("/public/files", express.static("./public/files"));
 
 // routes
 app.use("/subject", subjectRoutes);
 app.use("/resource", resource_Routes);
+app.use("/contactUs", ContactUsMailerRoutes);
 
 app.listen(
   PORT,
