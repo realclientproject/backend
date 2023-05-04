@@ -9,13 +9,13 @@ import {
   del,
   update,
 } from "../controllers/admin_controller.js";
-import { verifyAdmin, super_admin } from "../middleware/auth.js";
+import { verifyAdmin, super_admin, admin } from "../middleware/auth.js";
 router.get("/", getAll);
 router.get("/:id", get);
-router.post("/register", verifyAdmin, super_admin, register);
+router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.delete("/:id", verifyAdmin, super_admin, del);
-router.patch("/edit/:id", verifyAdmin, super_admin, update);
+router.patch("/edit/:id", verifyAdmin, admin, update);
 
 export default router;
