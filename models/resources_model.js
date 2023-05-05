@@ -35,12 +35,12 @@ const resourceSchema = new Schema(
     },
     admin_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Admins",
+      ref: "Admin",
     },
     subject_id: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "subjects",
+        ref: "SubjectModel",
       },
     ],
   },
