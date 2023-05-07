@@ -19,9 +19,7 @@ if (process.env.NODE_ENV === "development") {
 
 // app.use(multer().array());
 
-app.use(cors({
-   origin: "https://localhost:5000",
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
