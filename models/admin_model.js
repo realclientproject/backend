@@ -37,8 +37,15 @@ const adminSchema = new Schema(
     },
     phone: {
       type: String,
-      match: /\d{8}/,
       unique: [true, "already exist"],
+      default: "not found",
+    },
+    grade: {
+      type: String,
+      default: "not found",
+    },
+    subject: {
+      type: String,
       default: "not found",
     },
     role: {
