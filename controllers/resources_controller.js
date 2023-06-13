@@ -4,7 +4,7 @@ import resourceModel from "../models/resources_model.js";
 
 function getAll(req, res, next) {
   const page = parseInt(req.query.page) || 1;
-  const limit = 6;
+  const limit = 116;
   const skipIndex = (page - 1) * limit;
 
   resourceModel
@@ -37,38 +37,7 @@ function getById(req, res, next) {
     });
 }
 
-// function add(req, res, next) {
-//   let addresource = new resourceModel(req.body);
-//   addresource
-//     .save()
-//     .then((response) =>
-//       res.status(200).send({ success: true, response: response })
-//     )
-//     .catch((err) => {
-//       res.status(400).send(err);
-//     });
-// }
 
-// function add(req, res, next) {
-//   let resource = new resourceModel ({
-//     name: req.body.name,
-//     type: req.body.type,
-//     description: req.body.description,
-//     price: req.body.price,
-//     count: req.body.count,
-//     admin_id: req.body.admin_id,
-//     subject_id: req.body.subject_id,
-//     media:  req.body.media
-//   });
-//   if (req.file) {
-//     resource.media = req.file.mediapath;
-//     // resource.file = req.file.filepath;
-//   }
-//   resource.save((err, savedResource) => {
-//     if (err) return next(err);
-//     res.status(200).send({ success: true, resource: savedResource });
-//   });
-// };
 
 
 export const addResource = async (req, res, next) => {
@@ -99,37 +68,11 @@ export const addResource = async (req, res, next) => {
   }
 };
 
-// function Delete(req, res, next) {
-//   let i = req.params.id;
-//   resourceModel
-//     .findByIdAndRemove({ _id: i })
-//     .exec()
-//     .then((response) => {
-//       res.status(200).send({ success: true, response });
-//     })
-//     .catch((err) => {
-//       return next(err);
-//     });
-// }
-
-// function Update(req, res, next) {
-//   let id = req.params.id;
-//   let body = req.body;
-//   resourceModel
-//     .findOneAndUpdate({ _id: id }, { $set: body }, { new: true })
-//     .exec()
-//     .then((response) => {
-//       res.status(200).send({ success: true, response });
-//     })
-//     .catch((err) => {
-//       return next(err);
-//     });
-// }
 
 export const updateResources = async (req, res, next) => {
   const { name, type, price, count, description, media } = req.body;
   try {
-    let resource = await Model.findById(req.params.id);
+    let resource = await resourceModel.findById(req.params.id);
     if (!resource) {
       return res.status(404).json({ message: "resource not found" });
     }
