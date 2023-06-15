@@ -15,7 +15,7 @@ router.get("/:id", get);
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.delete("/:id", verifyAdmin, super_admin, del);
+router.delete("/:id", del);
 router.patch("/edit/:id", verifyAdmin, admin, update);
 
 export default router;
