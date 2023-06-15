@@ -4,7 +4,7 @@ import resourceModel from "../models/resources_model.js";
 
 function getAll(req, res, next) {
   const page = parseInt(req.query.page) || 1;
-  const limit = 6;
+  const limit = 116;
   const skipIndex = (page - 1) * limit;
 
   resourceModel
