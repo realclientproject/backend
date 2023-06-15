@@ -129,7 +129,7 @@ export const addResource = async (req, res, next) => {
 export const updateResources = async (req, res, next) => {
   const { name, type, price, count, description, media } = req.body;
   try {
-    let resource = await Model.findById(req.params.id);
+    let resource = await resourceModel.findById(req.params.id);
     if (!resource) {
       return res.status(404).json({ message: "resource not found" });
     }
@@ -153,23 +153,40 @@ export const updateResources = async (req, res, next) => {
   }
 };
 
-// delete category
 export const deleteResource = async (req, res) => {
   let { id } = req.params;
   try {
-    const resource = await Model.findByIdAndDelete({ _id: id });
-    if (resource !== null && resource !== undefined) {
-      fs.unlinkSync(`${resource.image}`, (err) => {
-        if (err) throw err;
-        console.log(`Successfully deleted file ${resource.image}`);
+    const resource = await resourceModel.findByIdAndDelete({ _id: id });
+    if (!resource) {
+      return res.status(404).json({ error: "Resource not found" });
+    }
+
+    if (resource.image) {
+      fs.unlink(resource.image, (err) => {
+        if (err) {
+          console.error(`Error deleting image file: ${err}`);
+        } else {
+          console.log(`Successfully deleted image file: ${resource.image}`);
+        }
       });
     }
 
-    res.status(200).json("resource deleted successfully");
+    if (resource.file) {
+      fs.unlink(resource.file, (err) => {
+        if (err) {
+          console.error(`Error deleting file: ${err}`);
+        } else {
+          console.log(`Successfully deleted file: ${resource.file}`);
+        }
+      });
+    }
+
+    res.status(200).json({ message: "Resource deleted successfully" });
   } catch (error) {
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
+
 
 const resource_controller = {
   getAll,
