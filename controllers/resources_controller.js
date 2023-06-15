@@ -10,8 +10,8 @@ function getAll(req, res, next) {
   resourceModel
     .find({})
     .sort({ _id: 1 })
-    .skip(skipIndex)
-    .limit(limit)
+    // .skip(skipIndex)
+    // .limit(limit)
     .then((response) => {
       res.status(200).send({ success: true, response });
     })
