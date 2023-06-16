@@ -48,8 +48,8 @@ export const addResource = async (req, res, next) => {
         description: req.body.description,
         price: req.body.price,
         count: req.body.count,
-        admin_id: req.body.admin_id,
-        subject_id: req.body.subject_id,
+        lang: req.body.lang,
+        grade: req.body.grade,
         media:  req.file.path,
       });
 
@@ -89,8 +89,8 @@ export const updateResources = async (req, res, next) => {
     resource.description = description;
     resource.price = price;
     resource.count = count;
-    resource.admin_id = admin_id;
-    resource.subject_id = subject_id;
+    resource.lang= lang;
+    resource.grade = grade;
     
     // Check if the media field is provided in the request body
     if (media) {

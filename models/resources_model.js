@@ -28,25 +28,30 @@ const resourceSchema = new Schema(
       type: Number,
       required: true,
     },
-    admin_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
+ 
+ 
+    lang: {
+      type: String,
+      required: true,
+      enum: ["French", "Arabic","English"], 
     },
-    subject_id: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "SubjectModel",
-      },
-    ],
+    grade: {
+      type: String,
+      required: true,
+      enum: ["kg1","kg2","kg3","grade1", "grade2","grade3","grade4","grade5","grade6","grade7","grade8","grade9","grade10","grade11","grade12"], 
+
+    },
+ 
+    
   },
   {
     collection: "resources",
   }
 );
 
-resourceSchema.pre(["find", "findOne"], function () {
-  this.populate("admin_id").populate("subject_id");
-});
+// resourceSchema.pre(["find", "findOne"], function () {
+//   this.populate("admin_id").populate("subject_id");
+// });
 
 const ResourceModel = model("ResourceModel", resourceSchema);
 export default ResourceModel;
