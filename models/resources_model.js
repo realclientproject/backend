@@ -10,7 +10,7 @@ const resourceSchema = new Schema(
     type: {
       type: String,
       required: true,
-      enum: ["Lesson", "quiz"], 
+      enum: ["Lesson", "quiz"],
     },
     description: {
       type: String,
@@ -20,15 +20,10 @@ const resourceSchema = new Schema(
       type: Number,
       required: true,
     },
-  media:{
-    type:String,
-    required:true,
-  },
-  
-  // file:{
-  //   type:String,
-  //   // required:true,
-  // },
+    media: {
+      type: String,
+      required: true,
+    },
     count: {
       type: Number,
       required: true,
@@ -50,8 +45,8 @@ const resourceSchema = new Schema(
 );
 
 resourceSchema.pre(["find", "findOne"], function () {
-  this.populate(["admin_id", "subject_id"]);
+  this.populate("admin_id").populate("subject_id");
 });
 
-const resourceModel = model("resourceModel", resourceSchema);
-export default resourceModel;
+const ResourceModel = model("ResourceModel", resourceSchema);
+export default ResourceModel;

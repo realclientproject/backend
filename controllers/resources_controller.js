@@ -37,38 +37,6 @@ function getById(req, res, next) {
     });
 }
 
-// function add(req, res, next) {
-//   let addresource = new resourceModel(req.body);
-//   addresource
-//     .save()
-//     .then((response) =>
-//       res.status(200).send({ success: true, response: response })
-//     )
-//     .catch((err) => {
-//       res.status(400).send(err);
-//     });
-// }
-
-// function add(req, res, next) {
-//   let resource = new resourceModel ({
-//     name: req.body.name,
-//     type: req.body.type,
-//     description: req.body.description,
-//     price: req.body.price,
-//     count: req.body.count,
-//     admin_id: req.body.admin_id,
-//     subject_id: req.body.subject_id,
-//     media:  req.body.media
-//   });
-//   if (req.file) {
-//     resource.media = req.file.mediapath;
-//     // resource.file = req.file.filepath;
-//   }
-//   resource.save((err, savedResource) => {
-//     if (err) return next(err);
-//     res.status(200).send({ success: true, resource: savedResource });
-//   });
-// };
 
 
 export const addResource = async (req, res, next) => {
@@ -98,53 +66,37 @@ export const addResource = async (req, res, next) => {
       return next(err);
   }
 };
+ 
 
-// function Delete(req, res, next) {
-//   let i = req.params.id;
-//   resourceModel
-//     .findByIdAndRemove({ _id: i })
-//     .exec()
-//     .then((response) => {
-//       res.status(200).send({ success: true, response });
-//     })
-//     .catch((err) => {
-//       return next(err);
-//     });
-// }
 
-// function Update(req, res, next) {
-//   let id = req.params.id;
-//   let body = req.body;
-//   resourceModel
-//     .findOneAndUpdate({ _id: id }, { $set: body }, { new: true })
-//     .exec()
-//     .then((response) => {
-//       res.status(200).send({ success: true, response });
-//     })
-//     .catch((err) => {
-//       return next(err);
-//     });
-// }
+import path from 'path';
 
 export const updateResources = async (req, res, next) => {
   const { name, type, price, count, description, media } = req.body;
   try {
     let resource = await resourceModel.findById(req.params.id);
     if (!resource) {
-      return res.status(404).json({ message: "resource not found" });
+      return res.status(404).json({ message: "Resource not found" });
     }
-    if (resource.media) {
-      fs.unlinkSync(`${resource.media}`);
+
+    if (resource.media && resource.media !== media) {
+      const mediaPath = path.join('public', 'images', resource.media);
+      fs.unlinkSync(mediaPath);
     }
+
     resource.name = name;
     resource.type = type;
     resource.description = description;
     resource.price = price;
     resource.count = count;
-    resource.name = name;
     resource.admin_id = admin_id;
     resource.subject_id = subject_id;
-    resource.media = media;
+    
+    // Check if the media field is provided in the request body
+    if (media) {
+      resource.media = `images/${media}`;
+    }
+
     await resource.save();
     res.json(resource);
   } catch (err) {
@@ -152,6 +104,8 @@ export const updateResources = async (req, res, next) => {
     res.status(500).json({ status: 500, err: err.message });
   }
 };
+
+
 
 export const deleteResource = async (req, res) => {
   let { id } = req.params;

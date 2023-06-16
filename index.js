@@ -39,8 +39,8 @@ app.get("/", (req, res) => {
 });
 await connectDB();
 
-app.use("/public/images", express.static("./public/images"));
-app.use("/public/files", express.static("./public/files"));
+app.use("/public", express.static("./public/images"));
+// app.use("/public/files", express.static("./public/files"));
 
 app.use("/subject", subjectRoutes);
 app.use("/resource", resource_Routes);

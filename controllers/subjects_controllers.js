@@ -3,7 +3,7 @@ import subjectModel from "../models/subjects_model.js";
 
 function getAll(req, res, next) {
   const page = parseInt(req.query.page) || 1;
-  const limit = 6;
+  const limit = 1116;
   const skipIndex = (page - 1) * limit;
 
   subjectModel
