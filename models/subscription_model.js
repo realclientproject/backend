@@ -22,11 +22,11 @@ const SubscriptionSchema = new Schema(
     DueDate: {
       type: Date,
     },
-    User: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    // User: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User",
+    //   required: true,
+    // },
     isActive: {
       type: Boolean,
       default: false,
@@ -36,19 +36,19 @@ const SubscriptionSchema = new Schema(
     collection: "subscriptions",
   }
 );
-SubscriptionSchema.pre(["find", "findOne", "findOneAndUpdate"], function () {
-  this.populate(
-    "User",
-    "_id FirstName LastName Email Phone createdAt updatedAt"
-  );
-});
+// SubscriptionSchema.pre(["find", "findOne", "findOneAndUpdate"], function () {
+//   this.populate(
+//     "User",
+//     "_id FirstName LastName Email Phone createdAt updatedAt"
+//   );
+// });
 SubscriptionSchema.pre("save", function (next) {
   if (!this.DueDate) {
     this.DueDate = moment(this.StartDate).add(1, "year");
   }
-    next();
+  next();
 });
 
 SubscriptionSchema.plugin(mongoosePaginate);
-const Subscription = model("SubscUserSchemaription", SubscriptionSchema);
+const Subscription = model("Subscription", SubscriptionSchema);
 export default Subscription;

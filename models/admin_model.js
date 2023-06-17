@@ -40,18 +40,23 @@ const adminSchema = new Schema(
       unique: [true, "already exist"],
       default: "not found",
     },
-    grade: {
-      type: String,
-      default: "not found",
-    },
     subject: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
       default: "not found",
+      ref: "SubjectModel",
     },
     role: {
       type: String,
       enum: ["superadmin", "admin", "user"],
       default: "user",
+    },
+    subscription: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subscription",
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -72,6 +77,20 @@ adminSchema.pre("save", function (next) {
       next(err);
     });
 });
-
+// adminSchema.pre("findOneAndUpdate", function () {
+//   this.$where = { isDeleted: false };
+// });
+// UserSchema.post("findOneAndDelete", async function (next) {
+//   const admin = await Admin.findOneAndDelete(
+//     this.Admin
+//   ).exec();
+//   next();
+// });
+adminSchema.pre(["find", "findOne", "findOneAndUpdate"], function () {
+  this.populate(
+    ["subscription", "subject"]
+    // "_id FirstName LastName Email Phone createdAt updatedAt"
+  );
+});
 const Admin = model("Admin", adminSchema);
 export default Admin;

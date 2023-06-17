@@ -37,37 +37,33 @@ function getById(req, res, next) {
     });
 }
 
-
-
-
 export const addResource = async (req, res, next) => {
   try {
-      console.log(req.body);
-      const form = new resourceModel({
-        name: req.body.name,
-        type: req.body.type,
-        description: req.body.description,
-        price: req.body.price,
-        count: req.body.count,
-        admin_id: req.body.admin_id,
-        subject_id: req.body.subject_id,
-        media:  req.file.path,
-      });
+    console.log(req.body);
+    const form = new resourceModel({
+      name: req.body.name,
+      type: req.body.type,
+      description: req.body.description,
+      price: req.body.price,
+      count: req.body.count,
+      admin_id: req.body.admin_id,
+      subject_id: req.body.subject_id,
+      media: req.file.path,
+    });
 
-      await form.save().then((response) => {
-          if (response) {
-              res.status(200).send({
-                  status: 200,
-                  message: "Added resource successfuly",
-                  response,
-              });
-          }
-      });
+    await form.save().then((response) => {
+      if (response) {
+        res.status(200).send({
+          status: 200,
+          message: "Added resource successfuly",
+          response,
+        });
+      }
+    });
   } catch (err) {
-      return next(err);
+    return next(err);
   }
 };
-
 
 export const updateResources = async (req, res, next) => {
   const { name, type, price, count, description, media } = req.body;
