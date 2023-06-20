@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 });
 await connectDB();
 
-app.use("/public", express.static("./public/images"));
+app.use("/resource/public", express.static("./public"));
 // app.use("/public/files", express.static("./public/files"));
 
 app.use("/subject", subjectRoutes);

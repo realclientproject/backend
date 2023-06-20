@@ -5,14 +5,15 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, callback) {
         callback(
-            null,
-            file.fieldname +
-                "-" +
-                Date.now() +
-                "." +
-                file.mimetype.split("/")[1]
+          null,
+          file.fieldname +
+            "-" +
+            Date.now() +
+            "." +
+            file.originalname.split(".").pop()
         );
-    },
+      }
+      
 });
 const upload = multer({ storage });
 export default function (req, res, next) {
